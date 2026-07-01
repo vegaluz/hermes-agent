@@ -3,7 +3,7 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-   "startCommand":"python run_agent.py --model=claude-sonnet-4-6",
+  "startCommand":"python run_agent.py --model=claude-haiku-4-5",
     "restartPolicyType": "ON_FAILURE"
   }
 }
