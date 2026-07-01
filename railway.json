@@ -3,7 +3,7 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "python run_agent.py --no-desktop",
+   "startCommand":"python run_agent.py",
     "restartPolicyType": "ON_FAILURE"
   }
 }
