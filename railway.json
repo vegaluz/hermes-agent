@@ -3,7 +3,7 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-  "startCommand":"python run_agent.py --model=claude-haiku-4-5",
+"startCommand":"python run_agent.py --model=openrouter/nousresearch/hermes-3-405b-instruct:free",
     "restartPolicyType": "ON_FAILURE"
   }
 }
