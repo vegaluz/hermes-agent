@@ -22,7 +22,6 @@ from ._oss_providers import (
     KNOWN_DIMS,
     validate_oss_config,
 )
-from hermes_cli import _subprocess_compat
 
 
 def _curses_select(title: str, items: list[tuple[str, str]], default: int = 0) -> int:
@@ -306,12 +305,12 @@ def _setup_platform(hermes_home: str, config: dict, flags: dict[str, str]) -> No
     if env_writes:
         _write_env(Path(hermes_home) / ".env", env_writes)
 
-    print(f"\n  Memory provider: mem0")
-    print(f"  Activation saved to config.yaml")
-    print(f"  Provider config saved")
+    print("\n  Memory provider: mem0")
+    print("  Activation saved to config.yaml")
+    print("  Provider config saved")
     if env_writes:
-        print(f"  API keys saved to .env")
-    print(f"\n  Start a new session to activate.\n")
+        print("  API keys saved to .env")
+    print("\n  Start a new session to activate.\n")
 
 
 def _setup_oss(hermes_home: str, config: dict, flags: dict[str, str]) -> None:
@@ -359,14 +358,14 @@ def _setup_oss(hermes_home: str, config: dict, flags: dict[str, str]) -> None:
     save_config(config)
 
     _run_connectivity_checks(oss_config)
-    print(f"\n  ✓ Mem0 configured (OSS mode)")
+    print("\n  ✓ Mem0 configured (OSS mode)")
     print(f"    LLM:      {oss_config['llm']['provider']} ({oss_config['llm']['config'].get('model', '')})")
     print(f"    Embedder: {oss_config['embedder']['provider']} ({oss_config['embedder']['config'].get('model', '')})")
     print(f"    Vector:   {vector_id}")
     if env_writes:
-        print(f"    API keys saved to .env")
-    print(f"    Config saved to mem0.json")
-    print(f"    Provider set in config.yaml")
+        print("    API keys saved to .env")
+    print("    Config saved to mem0.json")
+    print("    Provider set in config.yaml")
     print("\n  Start a new session to activate.\n")
 
 
@@ -406,19 +405,19 @@ def _ensure_pgvector(host: str = "localhost", port: int = 5432) -> dict | None:
     # Check if our container already exists but is stopped
     if shutil.which("docker"):
         try:
-            result = _subprocess_compat.run(
+            result = subprocess.run(
                 ["docker", "inspect", _PGVECTOR_CONTAINER, "--format", "{{.State.Status}}"],
                 capture_output=True, text=True, timeout=10, stdin=subprocess.DEVNULL,
             )
             if result.returncode == 0 and "exited" in result.stdout:
                 print(f"  Found stopped container '{_PGVECTOR_CONTAINER}', restarting...")
-                _subprocess_compat.run(["docker", "start", _PGVECTOR_CONTAINER],
+                subprocess.run(["docker", "start", _PGVECTOR_CONTAINER],
                                capture_output=True, timeout=15,
                                stdin=subprocess.DEVNULL)
                 _wait_for_port(host, port, timeout=15)
                 ok, _ = _check_pgvector(host, port)
                 if ok:
-                    print(f"  ✓ PostgreSQL container restarted")
+                    print("  ✓ PostgreSQL container restarted")
                     return None
         except Exception:
             pass
@@ -439,17 +438,17 @@ def _start_pgvector_docker(host: str, port: int) -> dict | None:
     """Pull and start pgvector Docker container."""
     try:
         print(f"  Pulling {_PGVECTOR_IMAGE}...")
-        _subprocess_compat.run(["docker", "pull", _PGVECTOR_IMAGE],
+        subprocess.run(["docker", "pull", _PGVECTOR_IMAGE],
                        capture_output=True, timeout=120,
                        stdin=subprocess.DEVNULL)
 
         # Remove existing container if present
-        _subprocess_compat.run(["docker", "rm", "-f", _PGVECTOR_CONTAINER],
+        subprocess.run(["docker", "rm", "-f", _PGVECTOR_CONTAINER],
                        capture_output=True, timeout=10,
                        stdin=subprocess.DEVNULL)
 
         print(f"  Starting container '{_PGVECTOR_CONTAINER}' on port {port}...")
-        _subprocess_compat.run([
+        subprocess.run([
             "docker", "run", "-d",
             "--name", _PGVECTOR_CONTAINER,
             "-e", f"POSTGRES_PASSWORD={_PGVECTOR_PASSWORD}",
@@ -523,8 +522,7 @@ def _ensure_ollama(models: list[str]) -> bool:
             print(f"  Pulling '{model}'... (this may take a few minutes)")
             try:
                 subprocess.run([ollama_bin or "ollama", "pull", model], timeout=600,
-                               stdin=subprocess.DEVNULL,
-                               creationflags=windows_hide_flags())
+                               stdin=subprocess.DEVNULL)
                 print(f"  ✓ Model '{model}' pulled")
             except Exception as e:
                 print(f"  Warning: Could not pull '{model}': {e}")
@@ -713,14 +711,14 @@ def _setup_oss_interactive(hermes_home: str, config: dict) -> None:
     save_config(config)
 
     _run_connectivity_checks(oss_config)
-    print(f"\n  ✓ Mem0 configured (OSS mode)")
+    print("\n  ✓ Mem0 configured (OSS mode)")
     print(f"    LLM:      {oss_config['llm']['provider']} ({oss_config['llm']['config'].get('model', '')})")
     print(f"    Embedder: {oss_config['embedder']['provider']} ({oss_config['embedder']['config'].get('model', '')})")
     print(f"    Vector:   {vector_id}")
     if env_writes:
-        print(f"    API keys saved to .env")
-    print(f"    Config saved to mem0.json")
-    print(f"    Provider set in config.yaml")
+        print("    API keys saved to .env")
+    print("    Config saved to mem0.json")
+    print("    Provider set in config.yaml")
     print("\n  Start a new session to activate.\n")
 
 
@@ -735,7 +733,7 @@ def _install_provider_deps(llm_id: str, embedder_id: str, vector_id: str) -> Non
     for dep in sorted(deps):
         try:
             print(f"  Installing {dep}...")
-            _subprocess_compat.run(
+            subprocess.run(
                 ["uv", "pip", "install", "--python", sys.executable, dep],
                 capture_output=True, timeout=60,
             )

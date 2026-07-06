@@ -41,6 +41,8 @@ IGNORED_PATTERNS = [
     re.compile(r"^Copilot$", re.IGNORECASE),
     re.compile(r"^Cursor(\s+Agent)?$", re.IGNORECASE),
     re.compile(r"^Codex$", re.IGNORECASE),
+    re.compile(r"^OpenAI Codex$", re.IGNORECASE),
+    re.compile(r"^CommandCode", re.IGNORECASE),
     re.compile(r"^github-advanced-security(\[bot\])?$", re.IGNORECASE),
     re.compile(r"^GitHub\s*Actions?$", re.IGNORECASE),
     re.compile(r"^github-actions(\[bot\])?$", re.IGNORECASE),
@@ -59,6 +61,8 @@ IGNORED_EMAILS = {
     "hermes-audit@example.com",
     "hermes@habibilabs.dev",
     "omx@oh-my-codex.dev",
+    "codex@openai.com",
+    "noreply@commandcode.ai",
 }
 
 
@@ -97,7 +101,7 @@ def gh_pr_list():
     Returns an empty list if gh is not available or the call fails.
     """
     try:
-        result = subprocess.run(  # windows-footgun: ok — dev-only contributor-audit script
+        result = subprocess.run(
             [
                 "gh", "pr", "list",
                 "--repo", "NousResearch/hermes-agent",
