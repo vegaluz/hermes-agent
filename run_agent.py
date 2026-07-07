@@ -5954,7 +5954,6 @@ def main(
     except RuntimeError as e:
         print(f"❌ Failed to initialize agent: {e}")
         return
-    
     # Use provided query or default to Python 3.13 example
     if query is None:
         user_query = (
