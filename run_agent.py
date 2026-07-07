@@ -1,3 +1,5 @@
+os.environ["AI_MODEL"] = "gemini-1.5-flash"
+os.environ["LLM_MODEL"] = "gemini-1.5-flash"
 #!/usr/bin/env python3
 """
 AI Agent Runner with Tool Calling
