@@ -5936,10 +5936,10 @@ def main(
         print("   - Successful conversations → trajectory_samples.jsonl")
         print("   - Failed conversations → failed_trajectories.jsonl")
     
-    # Initialize agent with provided parameters
+# Initialize agent with provided parameters
     try:
         # Inicializar el agente con el modelo correcto
-            print(f"DEBUG: Iniciando agente con modelo: gemini-1.5-flash")
+        print(f"DEBUG: Iniciando agente con modelo: gemini-1.5-flash")
         agent = AIAgent(
             base_url=base_url,
             model="gemini-1.5-flash",
@@ -5948,12 +5948,12 @@ def main(
             enabled_toolsets=enabled_toolsets_list,
             disabled_toolsets=disabled_toolsets_list,
             save_trajectories=save_trajectories,
-           verbose_logging=verbose,
-        log_prefix_chars=log_prefix_chars
-    )
+            verbose_logging=verbose,
+            log_prefix_chars=log_prefix_chars
+        )
     except RuntimeError as e:
-              print(f"❌ Failed to initialize agent: {e}")
-              return
+        print(f"❌ Failed to initialize agent: {e}")
+        return
     
     # Use provided query or default to Python 3.13 example
     if query is None:
