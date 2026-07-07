@@ -1,9 +1,9 @@
 {
   "build": {
-    "builder": "NIXPACKS"
+    "builder": "DOCKERFILE"
   },
   "deploy": {
-"startCommand":"python run_agent.py --model=nousresearch/hermes-3-405b-instruct",
+    "startCommand": "python run_agent.py --model=gemini-1.5-flash",
     "restartPolicyType": "ON_FAILURE"
   }
 }
