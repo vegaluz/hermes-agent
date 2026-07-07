@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+import os
+
 os.environ["GOOGLE_API_KEY"] = os.environ.get("GEMINI_API_KEY", "")
 os.environ["AI_MODEL"] = "gemini-1.5-flash"
 os.environ["LLM_MODEL"] = "gemini-1.5-flash"
