@@ -5937,7 +5937,7 @@ def main(
     try:
         agent = AIAgent(
             base_url=base_url,
-            model=model,
+         model=model or "gemini-1.5-flash",
             api_key=api_key,
             max_iterations=max_turns,
             enabled_toolsets=enabled_toolsets_list,
