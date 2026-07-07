@@ -3,7 +3,7 @@
     "builder": "DOCKERFILE"
   },
   "deploy": {
-    "startCommand": "python run_agent.py --model=gemini-1.5-flash",
+    "startCommand": "python run_agent.py",
     "restartPolicyType": "ON_FAILURE"
   }
 }
